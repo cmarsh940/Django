@@ -1,0 +1,21 @@
+/* css reset*/
+* {
+	padding: 0px;
+	margin: 15px;
+}
+
+input, textarea {
+	display: block;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid;
+}
+
+td {
+	width: 200px;
+}

@@ -1,0 +1,9 @@
+/*  css reset */
+* {
+	padding: 0px;
+	margin: 5px;
+}
+
+input {
+	display: inline-block;
+}

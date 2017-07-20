@@ -1,0 +1,12 @@
+        echo: off
+         eqp: off
+     explain: auto
+     headers: off
+        mode: list
+   nullvalue: ""
+      output: Full_book
+colseparator: "|"
+rowseparator: "\n"
+       stats: off
+       width: 
+    filename: db.sqlite3
