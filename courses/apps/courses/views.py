@@ -1,22 +1,28 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
-from django.views.generic.edit import DeleteView
-from django.urls import reverse_lazy
-from .models import Course
+from django.shortcuts import render, redirect, HttpResponse
+from .models import Course, Description
+
 # Create your views here.
 def index(request):
-	context = {
-	 'courses' : Course.objects.all()
-	}
-	return render(request, 'courses/index.html', context)
+    context = {
+        "courses": Course.objects.all()
+    }
+    return render(request, 'courses/index.html', context)
 
+#function to handle the courses
 def courses(request):
-	Course.objects.create(name=request.POST['name'], description=request.POST['description'])
-	return redirect('/')
+    if request.method == 'POST':
+        course = Course.objects.create(name=request.POST['name'])
+        Description.objects.create(text=request.POST['description'], course_id=course)
+    return redirect('/')
 
-def action(request):
-	return render(request, 'courses/action.html')
+#functions to delete page and destroy function 
+def delete(request, course_id):
+    context = {
+        "courses": Course.objects.get(id=course_id)
+    }
+    return render(request, 'courses/delete.html', context)
 
-def course_delete(request, id):
-    course = Course.objects.all(course, id=id)
-    course.delete()
-    return redirect('get:index')
+def destroy(request, course_id):
+    if request.method == 'POST':
+        Course.objects.filter(id=course_id).delete()
+        return redirect('/')

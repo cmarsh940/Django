@@ -1,0 +1,9 @@
+/* css reset  */
+* {
+	padding: 0px;
+	margin: 10px;
+}
+
+table {
+	border: 1px solid;
+}

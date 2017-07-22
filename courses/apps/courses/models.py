@@ -4,13 +4,10 @@ from django.db import models
 
 # Create your models here.
 class Course(models.Model):
-	name = models.CharField(max_length=255)
-	description = models.TextField()
-	created_at = models.DateTimeField(auto_now_add=True)
-	updated_at = models.DateTimeField(auto_now=True)
-	# def __str__(self):
-	# 	output = "id: {}", "title: {}", "category: {}"
+    name = models.CharField(max_length=250)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-	# 	return output.format(
-
-	# 		)
+class Description(models.Model):
+    text = models.CharField(max_length=1000)
+    course_id = models.OneToOneField(Course)

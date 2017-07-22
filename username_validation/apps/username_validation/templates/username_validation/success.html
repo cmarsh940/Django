@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success</title>
+    {% load staticfiles %}
+    <!-- The line above tells Django to be ready to listen for static files -->
+    <link rel="stylesheet" href="{% static '/username_validation/css/style.css' %}" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    <h1>Usernames Entered:</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>Usernames</th>
+                <th>Joined On</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        {% for user in users %}
+        <tbody>
+            <tr>
+                <td>{{user.username}}</td>
+                <td>{{user.created_at}}</td>
+                <td>
+                <form action='/destroy/{{user.id}}' method='post'>
+                    {% csrf_token %}
+                    <input type='submit' value='REMOVE'>
+                </form>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    <button><a href="/">Go Back</a></button>
+</body>
+</html>

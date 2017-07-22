@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success</title>
+    {% load staticfiles %}
+    <!-- The line above tells Django to be ready to listen for static files -->
+    <link rel="stylesheet" href="{% static '/login_registration/css/style.css' %}" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    <h1>Success!</h1>
+    <h2>Thanks {{request.session.first_name}}, your user id is {{request.session.id}}</h2>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li><h2>{{ message }}</h2></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <button><a href="logout">logout</a></button>
+</body>
+</html>

@@ -19,3 +19,8 @@ table, th, td {
 td {
 	width: 200px;
 }
+
+a {
+	text-decoration: none;
+	color: blue
+}
