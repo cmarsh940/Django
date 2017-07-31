@@ -1,62 +1,71 @@
-from django.shortcuts import render, redirect
-from .models import User
- 
-# Create your views here.
+from django.shortcuts import render, redirect, reverse
+from django.db.models import Count
+from ..login_register.models import User
+from .models import Secret
+
 def index(request):
-	return render(request, 'secrets/index.html')
+    current_user = User.objects.currentUser(request)
+    secrets = Secret.objects.annotate(num_likes=Count('liked_by'))
 
-def success(request):
-	if 'user_id' in request.session:
+    # if i need to put likes in order by most likes also ([:3] says to just get the top 3 likes)
+    # secrets = Secret.objects.annotate(num_likes=Count('liked_by')).order_by('-num_likes')[:3]
 
-		return render(request, 'secrets/success.html')
+# context = the user and the secret when the index page is loaded.
+    context = {
+        'user': current_user,
+        'secrets': secrets,
+    }
 
-	return redirect('/')
-
-def register(request):
-	if request.method == 'POST':
-		errors = User.objects.validRegistration(request.POST)
-
-		if not errors:
-			user = User.objects.createUser(request.POST)
-
-			request.session['user_id'] = user.id
-
-			return redirect('/success')
-
-		print errors
-
-	return redirect('/')
-
-def login(request):
-	if request.method == 'POST':
-		errors = User.objects.validLogin(request.POST)
-
-		if not errors:
-			user = User.objects.createUser(request.POST)
-
-		if user:
-			password = str(request.POST['password'])
-			user_password = str(user.password)
-
-			hashed_pw = bcrypt.hashpw(password, user_password)
-
-			if hashed_pw == user.password:
-				request.session['user_id'] = user.id
-
-					return redirect('/success')
-
-			errors.append("invalid account information.")
-
-		print errors
-		
-	return redirect('/')
+    return render(request, 'secrets/index.html', context)
 
 
-	return redirect('/')
+# create the content post controller
 
-def logout(request):
-	if 'user_id' in request.session:
-		request.session.pop('user_id')
+def create(request):
+    if request.method == "POST":
 
-	return redirect('/')
-	pass
+        if len(request.POST['content']) != 0:
+            current_user = User.objects.currentUser(request)
+
+            secret = Secret.objects.createSecret(request.POST, current_user)
+
+    return redirect(reverse('success'))
+
+
+# create the like controller
+
+def like(request, id):
+    current_user = User.objects.currentUser(request)
+    secret = Secret.objects.get(id=id)
+
+    current_user.likes.add(secret)
+
+    return redirect(reverse('success'))
+
+
+
+# Create the unlike controller
+
+def unlike(request, id):
+    current_user = User.objects.currentUser(request)
+    secret = Secret.objects.get(id=id)
+
+    current_user.likes.remove(secret)
+
+    return redirect(reverse('success'))
+
+
+# Create the delete controller
+
+def delete(request, id):
+    if request.method == "POST":
+        secret = Secret.objects.get(id=id)
+        current_user = User.objects.currentUser(request)
+
+        if current_user.id == secret.user.id:
+            secret.delete()
+
+    return redirect(reverse('success'))
+
+
+

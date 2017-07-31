@@ -16,6 +16,9 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <button><a href="logout">logout</a></button>
+    <form action="/logout" method="post">
+        {% csrf_token %}
+        <input type="submit" name="{% url 'logout' %}" value="logout" />
+    </form>
 </body>
 </html>

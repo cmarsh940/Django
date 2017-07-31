@@ -47,14 +47,16 @@ def success(request):
     return redirect('/')
 
 def logout(request):
-    print "hi"
-    if 'id' in request.session:
-        print "hi2"
-        request.sesion.set_expiry(0) 
-        try:
-            del request.session['id']
-        except KeyError:
-            pass
-        request.session.modified = True
-        return redirect('login_page')
+    if request.method == 'POST':
+        print "hi"
+
+        if 'id' in request.session:
+            print "hi2"
+            request.session.set_expiry(0) 
+            try:
+                del request.session['id']
+            except KeyError:
+                pass
+            request.session.modified = True
+            return redirect('login_page')
     return redirect('success')

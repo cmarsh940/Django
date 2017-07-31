@@ -3,5 +3,5 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 
 
-class SecretsConfig(AppConfig):
-    name = 'secrets'
+class SecretConfig(AppConfig):
+    name = 'secret'

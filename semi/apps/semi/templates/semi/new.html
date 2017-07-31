@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New</title>
+</head>
+<body>
+<h1>Add a new product</h1>
+<form action="handle_add_product" method="post" />
+	{% csrf_token %}
+	Name:<input type="text" name="name" placeholder="Name" />
+	Description:<input type="text" name="description" placeholder="Description" />
+	Price:<input type="text" name="price" placeholder="$" />
+	<input type="submit" value="Create" />
+</form>
+<a href="{% url 'product' %}">Home</a>
+</body>
+</html>

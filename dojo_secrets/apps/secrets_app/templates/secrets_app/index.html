@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Secrets App</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.first_name }}!</h1>
+    <a href="{% url 'logout' %}">Logout</a>
+
+    <p>Create a new secret</p>
+    <form action="{% url 'create-secret' %}" method="post">
+        {% csrf_token %}
+        <textarea name="content"></textarea>
+
+        <input type="submit" value="Create" />
+    </form>
+
+    <h4>All Secrets</h4>
+    {% for secret in secrets %}
+        <p>Number of Likes: {{ secret.num_likes }}</p>
+        <p>{{ secret.content }}</p>
+        
+        <!-- Delete Button -->
+        {% if user.id == secret.user.id %}
+            <form action="{% url 'delete-secret' id=secret.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete Secret" />
+            </form>
+        <!-- Like Button -->
+        {% elif user not in secret.liked_by.all %}
+            <a href="{% url 'like-secret' id=secret.id %}">Like</a>
+        <!-- Unlike Button -->
+        {% else %}
+            <a href="{% url 'unlike-secret' id=secret.id %}">Unlike</a>
+        {% endif %}
+        
+    
+        <hr>
+    {% endfor %}
+</body>
+</html>
