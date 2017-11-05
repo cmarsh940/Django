@@ -13,14 +13,14 @@
     <h3>Recent Book Reviews</h3>
     {% for review in reviews %}
         <h2><a href="{% url 'show_book' book_id=review.book.id %}">{{review.book.title}}</a></h2>
-        <p><a href="{% url 'show_user' user_id=review.user.id %}">{{review.user.first_name}}</a> says: {{review.text}} </p>
-        <p>{{review.user.first_name}}'s Rating: {{review.rating}}</p>
+        <h6><a href="{% url 'show_user' user_id=review.user.id %}">{{review.user.first_name}}</a> says: {{review.text}} </h6>
+        <h6>{{review.user.first_name}}'s Rating: {{review.rating}}</h6>
         <p>Posted on: {{review.created_at}}</p>
         <hr>
     {% endfor %}
-        <h3>Other Books with Reviews</h3>
+        <h4>Other Books with Reviews</h4>
     {% for book in books %}
-        <h4><a href="{% url 'show_book' book_id=book.id %}">{{book.title}}</a></h4>
+        <h5><a href="{% url 'show_book' book_id=book.id %}">{{book.title}}</a></h5>
     {% endfor %}
     <hr>
 </body>
