@@ -11,7 +11,7 @@
 	<form action='/courses' method='post'>
 		{% csrf_token %}
 		Name: <input type="text" name="name">
-		Description: <textarea name='description' rows="8" cols="40"></textarea>
+		Description: <textarea name='description' rows="5" cols="40"></textarea>
 		<input type="submit" name="submit" value="Add Course!">
 	</form>
 	
@@ -30,7 +30,7 @@
 				<td>{{course.name}}</td>
 				<td>{{course.description.text}}</td>
 				<td>{{course.created_at}}</td>
-				<td><a href="{% url 'delete' course_id=course.id%}">Remove</a></td>
+				<td><a href="{% url 'delete' course_id=course.id%}">Remove Course</a></td>
 			</tr>
 			{% endfor %}
 		</tbody>

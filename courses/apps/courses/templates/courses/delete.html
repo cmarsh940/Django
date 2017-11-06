@@ -10,7 +10,7 @@
 	<h1>Course</h1>
 	<h3>Are you sure you want to delete the "{{courses.name}}" course?</h3>
 	<p>Description : {{courses.description.text}}</p>
-	<button><a href="{% url 'index'%}">Go Back</a></button>
+	<button><a href="{% url 'index'%}">I changed my mind</a></button>
 	<form action='/destroy/{{courses.id}}' method='post'>
 		{% csrf_token %}
 		<input type='submit' Value='Yes, Delete this course'>
